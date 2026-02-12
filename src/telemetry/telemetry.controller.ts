@@ -32,9 +32,35 @@ export class TelemetryController {
     }
   }
 
+  @Get('ingest')
+  getIngestInfo() {
+    return {
+      message: 'This is a POST endpoint for telemetry ingestion.',
+      usage: 'Send a POST request with a Meter or Vehicle telemetry JSON body.',
+      example: {
+        meterId: 'M-123',
+        kwhConsumedAc: 150.5,
+        voltage: 230,
+        timestamp: new Date().toISOString()
+      }
+    };
+  }
+
   @Post('map')
   async mapVehicleToMeter(@Body() body: { vehicleId: string; meterId: string }) {
     await this.telemetryService.mapVehicleToMeter(body.vehicleId, body.meterId);
     return { status: 'success' };
+  }
+
+  @Get('map')
+  getMapInfo() {
+    return {
+      message: 'This is a POST endpoint for vehicle-to-meter mapping.',
+      usage: 'Send a POST request with vehicleId and meterId.',
+      example: {
+        vehicleId: 'V-456',
+        meterId: 'M-123'
+      }
+    };
   }
 }

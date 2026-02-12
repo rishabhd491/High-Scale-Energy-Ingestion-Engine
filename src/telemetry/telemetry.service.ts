@@ -28,7 +28,6 @@ export class TelemetryService {
     await queryRunner.startTransaction();
 
     try {
-      // 1. History Path (INSERT)
       const history = new TelemetryHistory();
       history.type = TelemetryType.METER;
       history.deviceId = dto.meterId;
@@ -36,7 +35,6 @@ export class TelemetryService {
       history.timestamp = new Date(dto.timestamp);
       await queryRunner.manager.save(history);
 
-      // 2. Live Path (UPSERT)
       await queryRunner.manager.upsert(
         MeterStatus,
         {
@@ -63,7 +61,6 @@ export class TelemetryService {
     await queryRunner.startTransaction();
 
     try {
-      // 1. History Path (INSERT)
       const history = new TelemetryHistory();
       history.type = TelemetryType.VEHICLE;
       history.deviceId = dto.vehicleId;
@@ -71,7 +68,6 @@ export class TelemetryService {
       history.timestamp = new Date(dto.timestamp);
       await queryRunner.manager.save(history);
 
-      // 2. Live Path (UPSERT)
       await queryRunner.manager.upsert(
         VehicleStatus,
         {
